@@ -1,0 +1,4 @@
+# Normaliza finais de linha no repositório (LF), independentemente do SO.
+* text=auto eol=lf
+*.png binary
+*.jpg binary
