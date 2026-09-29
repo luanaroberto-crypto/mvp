@@ -159,6 +159,22 @@ class TestErrorMapping:
         assert "detalhe interno" not in response.text
 
 
+class TestFrontend:
+    def test_serves_dashboard_page(self, api):
+        response = api.get("/")
+
+        assert response.status_code == 200
+        assert "text/html" in response.headers["content-type"]
+        assert 'id="search-form"' in response.text
+
+    @pytest.mark.parametrize("asset", ["/js/app.js", "/js/format.js", "/css/styles.css"])
+    def test_serves_static_assets(self, api, asset):
+        assert api.get(asset).status_code == 200
+
+    def test_page_does_not_embed_api_key(self, api):
+        assert "test-key" not in api.get("/").text
+
+
 class TestSecurityHeaders:
     def test_api_responses_include_security_headers(self, api):
         response = api.get("/health")

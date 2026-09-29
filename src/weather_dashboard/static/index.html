@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Dashboard de clima com condições atuais e previsão de 5 dias." />
+    <title>Weather Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script type="module" src="/js/app.js"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Pular para o conteúdo</a>
+
+    <header class="site-header">
+      <h1>Weather Dashboard</h1>
+      <p class="subtitle">Clima atual e previsão de 5 dias para qualquer cidade</p>
+    </header>
+
+    <main id="main" class="container">
+      <section aria-labelledby="search-heading" class="search">
+        <h2 id="search-heading" class="visually-hidden">Buscar cidade</h2>
+        <form id="search-form" class="search-form" role="search" novalidate>
+          <label for="city-input" class="visually-hidden">Nome da cidade</label>
+          <input
+            id="city-input"
+            name="city"
+            type="search"
+            placeholder="Ex.: Curitiba ou Paris,FR"
+            autocomplete="off"
+            maxlength="100"
+            required
+          />
+          <button type="submit">Buscar</button>
+        </form>
+        <div id="recent-cities" class="recent-cities" aria-label="Buscas recentes" hidden></div>
+      </section>
+
+      <p id="status" class="status" role="status" aria-live="polite" hidden></p>
+
+      <div id="results" hidden>
+        <section class="card current" aria-labelledby="current-city">
+          <div class="current-header">
+            <div>
+              <h2 id="current-city"></h2>
+              <p><time id="current-observed"></time></p>
+            </div>
+            <img id="current-icon" width="100" height="100" alt="" hidden />
+          </div>
+          <p class="current-temperature" id="current-temperature"></p>
+          <p class="current-description" id="current-description"></p>
+          <dl class="metrics">
+            <div><dt>Sensação</dt><dd id="current-feels-like"></dd></div>
+            <div><dt>Mín / Máx</dt><dd id="current-min-max"></dd></div>
+            <div><dt>Umidade</dt><dd id="current-humidity"></dd></div>
+            <div><dt>Vento</dt><dd id="current-wind"></dd></div>
+            <div><dt>Pressão</dt><dd id="current-pressure"></dd></div>
+          </dl>
+        </section>
+
+        <section class="forecast" aria-labelledby="forecast-heading">
+          <h2 id="forecast-heading">Próximos dias</h2>
+          <ul id="forecast-list" class="forecast-list"></ul>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <p>
+        Dados fornecidos por
+        <a href="https://openweathermap.org/" target="_blank" rel="noopener noreferrer"
+          >OpenWeatherMap</a
+        >.
+      </p>
+    </footer>
+  </body>
+</html>

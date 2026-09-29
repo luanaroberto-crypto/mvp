@@ -7,10 +7,12 @@ Executar localmente:
 import logging
 from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 import httpx
 from fastapi import FastAPI, Request, Response, status
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
 
 from weather_dashboard import __version__
 from weather_dashboard.api import router
@@ -18,6 +20,8 @@ from weather_dashboard.client import CityNotFoundError, OpenWeatherClient, Upstr
 from weather_dashboard.config import Settings, get_settings
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+
+STATIC_DIR = Path(__file__).parent / "static"
 
 # A documentação interativa (/docs) carrega JS/CSS de CDN, então fica fora da CSP restrita.
 DOCS_PATHS = ("/docs", "/redoc", "/openapi.json")
@@ -79,6 +83,9 @@ def create_app(settings: Settings | None = None) -> FastAPI:
         if not request.url.path.startswith(DOCS_PATHS):
             response.headers["Content-Security-Policy"] = CONTENT_SECURITY_POLICY
         return response
+
+    # Montado por último: as rotas da API e /health têm precedência sobre os arquivos estáticos.
+    app.mount("/", StaticFiles(directory=STATIC_DIR, html=True), name="static")
 
     return app
 
