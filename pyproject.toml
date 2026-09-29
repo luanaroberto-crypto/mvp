@@ -11,6 +11,10 @@ authors = [{ name = "Luana Costa" }]
 testpaths = ["tests"]
 pythonpath = ["src"]
 addopts = "-ra -q --strict-markers"
+filterwarnings = [
+    # Aviso interno do Starlette TestClient sobre migração futura para httpx2; não afeta o app.
+    "ignore:Using `httpx` with `starlette.testclient` is deprecated",
+]
 
 [tool.coverage.run]
 source = ["src"]
