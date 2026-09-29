@@ -18,4 +18,8 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 - Testes automatizados em Python (pytest) e JavaScript (node:test)
 - Pipeline de CI no GitHub Actions (ruff, mypy, pytest com cobertura mínima de 90%)
 
+### Segurança
+
+- Logs de requisição do httpx silenciados para não registrar a chave de API (`appid`)
+
 [1.0.0]: https://github.com/luanaroberto-crypto/mvp/releases/tag/v1.0.0

@@ -20,6 +20,9 @@ from weather_dashboard.client import CityNotFoundError, OpenWeatherClient, Upstr
 from weather_dashboard.config import Settings, get_settings
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(name)s: %(message)s")
+# O httpx registra a URL completa de cada requisição em INFO — e a URL do OpenWeatherMap
+# carrega a chave de API na query string (appid). Silenciar evita vazar o segredo nos logs.
+logging.getLogger("httpx").setLevel(logging.WARNING)
 
 STATIC_DIR = Path(__file__).parent / "static"
 

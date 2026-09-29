@@ -1,3 +1,4 @@
+import logging
 from datetime import timedelta
 
 import httpx
@@ -118,6 +119,19 @@ class TestErrorHandling:
 
         with pytest.raises(UpstreamError):
             await client.get_current("Curitiba")
+
+    @respx.mock
+    async def test_logs_do_not_leak_api_key(self, client, current_payload, caplog):
+        import weather_dashboard.main  # noqa: F401 — aplica a configuração de logging do app
+
+        caplog.set_level(logging.DEBUG)
+        respx.get(f"{BASE_URL}/weather").mock(return_value=httpx.Response(401, json={}))
+
+        with pytest.raises(UpstreamError):
+            await client.get_current("Curitiba")
+
+        assert caplog.records, "esperava ao menos o log de erro de autenticação"
+        assert "test-key" not in caplog.text
 
     @respx.mock
     async def test_error_messages_do_not_leak_api_key(self, client):
