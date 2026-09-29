@@ -1,6 +1,6 @@
 [project]
 name = "weather-dashboard"
-version = "1.0.0"
+version = "1.1.0"  # manter igual ao arquivo VERSION (verificado em tests/test_version.py)
 description = "Dashboard web de clima que consome a API do OpenWeatherMap via backend FastAPI."
 readme = "README.md"
 license = "MIT"

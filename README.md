@@ -30,6 +30,7 @@ histórico de commits no padrão Conventional Commits.
 - [Segurança](#segurança)
 - [Uso de IA generativa no desenvolvimento](#uso-de-ia-generativa-no-desenvolvimento)
 - [Próximos passos](#próximos-passos)
+- [Versionamento](#versionamento)
 - [Contribuição e padrão de commits](#contribuição-e-padrão-de-commits)
 - [Licença](#licença)
 
@@ -172,7 +173,7 @@ dublê via `app.dependency_overrides`.
 |---|---|---|---|
 | `GET` | `/api/weather/current` | `city` (obrigatório) | Clima atual da cidade |
 | `GET` | `/api/weather/forecast` | `city` (obrigatório), `days` (1–5, padrão 5) | Previsão diária |
-| `GET` | `/health` | — | `{"status": "ok", "version": "1.0.0"}` |
+| `GET` | `/health` | — | `{"status": "ok", "version": "1.1.0"}` (valor do arquivo `VERSION`) |
 
 Exemplo:
 
@@ -221,6 +222,7 @@ curl "http://localhost:8000/api/weather/current?city=Curitiba"
 ├── pyproject.toml               # Metadados e configuração de ruff/mypy/pytest
 ├── requirements.txt             # Dependências de execução (versões fixadas)
 ├── requirements-dev.txt         # Dependências de desenvolvimento
+├── VERSION                      # Versão da aplicação (fonte única da verdade)
 ├── CHANGELOG.md
 └── LICENSE
 ```
@@ -257,6 +259,26 @@ humana e validação por testes automatizados:
 - Geolocalização do usuário e alternância °C/°F
 - Testes end-to-end com Playwright
 - Imagem Docker para deploy
+
+## Versionamento
+
+A versão da aplicação tem **uma única fonte da verdade**: o arquivo [`VERSION`](VERSION) na
+raiz, contendo apenas o número semântico (ex.: `1.1.0`, sem o prefixo `v`).
+
+- O backend lê o arquivo uma vez na inicialização (`config.APP_VERSION`) e o expõe em
+  `/health` e na documentação da API.
+- O frontend mostra um selo discreto ao lado do título (ex.: **v1.1.0**), útil para
+  confirmar qual build está rodando.
+- Se o arquivo estiver ausente ou vazio, a versão exibida é `dev` — a aplicação nunca falha
+  por causa disso.
+- A versão **não** é uma variável de ambiente: ela pertence ao build, não à configuração.
+
+Para publicar uma nova versão:
+
+1. Atualize `VERSION` e o campo `version` do `pyproject.toml` (um teste falha se divergirem)
+2. Registre as mudanças no [CHANGELOG](CHANGELOG.md)
+3. Faça o commit, crie a tag e envie: `git tag -a vX.Y.Z -m "vX.Y.Z"` e
+   `git push origin main --follow-tags`
 
 ## Contribuição e padrão de commits
 

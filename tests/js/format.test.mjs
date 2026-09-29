@@ -7,9 +7,27 @@ import {
   capitalize,
   formatDay,
   formatTemperature,
+  formatVersion,
   formatWindSpeed,
   iconUrl,
 } from "../../src/weather_dashboard/static/js/format.js";
+
+describe("formatVersion", () => {
+  it("prefixes semantic versions with v", () => {
+    assert.equal(formatVersion("1.1.0"), "v1.1.0");
+    assert.equal(formatVersion("2.0.0-rc.1"), "v2.0.0-rc.1");
+  });
+
+  it("keeps the dev fallback as is", () => {
+    assert.equal(formatVersion("dev"), "dev");
+  });
+
+  it("returns null for anything unexpected", () => {
+    for (const value of [undefined, null, 1, "", "v1.0.0", "1.0", "<b>1.0.0</b>"]) {
+      assert.equal(formatVersion(value), null);
+    }
+  });
+});
 
 describe("formatTemperature", () => {
   it("rounds to the nearest integer", () => {

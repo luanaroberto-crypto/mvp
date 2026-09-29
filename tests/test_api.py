@@ -5,6 +5,7 @@ from datetime import datetime, timedelta, timezone
 import pytest
 from fastapi.testclient import TestClient
 
+from weather_dashboard import __version__
 from weather_dashboard.api import get_weather_client
 from weather_dashboard.client import CityNotFoundError, UpstreamError
 from weather_dashboard.main import create_app
@@ -83,7 +84,7 @@ class TestHealth:
         response = api.get("/health")
 
         assert response.status_code == 200
-        assert response.json() == {"status": "ok", "version": "1.0.0"}
+        assert response.json() == {"status": "ok", "version": __version__}
 
 
 class TestCurrentWeather:
@@ -166,6 +167,7 @@ class TestFrontend:
         assert response.status_code == 200
         assert "text/html" in response.headers["content-type"]
         assert 'id="search-form"' in response.text
+        assert 'id="app-version"' in response.text
 
     @pytest.mark.parametrize("asset", ["/js/app.js", "/js/format.js", "/css/styles.css"])
     def test_serves_static_assets(self, api, asset):

@@ -102,6 +102,16 @@ a {
   font-size: clamp(1.6rem, 4vw, 2.2rem);
 }
 
+/* Selo de versão: discreto de propósito — serve ao suporte, não ao marketing. */
+.version-badge {
+  font-family: ui-monospace, "Cascadia Code", Consolas, monospace;
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--color-muted);
+  white-space: nowrap;
+  vertical-align: middle;
+}
+
 .subtitle {
   margin: var(--space-1) 0 0;
   color: var(--color-muted);

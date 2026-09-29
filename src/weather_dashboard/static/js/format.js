@@ -3,6 +3,7 @@
  */
 
 const ICON_CODE = /^\d{2}[dn]$/;
+const SEMVER = /^\d+\.\d+\.\d+(?:[-+][0-9A-Za-z.-]+)?$/;
 export const MAX_RECENT_CITIES = 5;
 
 /** Temperatura arredondada em °C, evitando exibir "-0°C". */
@@ -28,6 +29,13 @@ export function formatDay(isoDate, locale = "pt-BR") {
 /** URL do ícone oficial, ou null se o código não tiver o formato esperado (defesa em profundidade). */
 export function iconUrl(code) {
   return ICON_CODE.test(code) ? `https://openweathermap.org/img/wn/${code}@2x.png` : null;
+}
+
+/** "1.1.0" -> "v1.1.0"; "dev" passa como está; qualquer outra coisa -> null (selo oculto). */
+export function formatVersion(version) {
+  if (typeof version !== "string") return null;
+  if (version === "dev") return "dev";
+  return SEMVER.test(version) ? `v${version}` : null;
 }
 
 export function capitalize(text) {

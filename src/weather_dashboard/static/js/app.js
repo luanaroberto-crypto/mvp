@@ -7,6 +7,7 @@ import {
   capitalize,
   formatDay,
   formatTemperature,
+  formatVersion,
   formatWindSpeed,
   iconUrl,
 } from "./format.js";
@@ -18,6 +19,7 @@ const elements = {
   form: document.getElementById("search-form"),
   input: document.getElementById("city-input"),
   status: document.getElementById("status"),
+  version: document.getElementById("app-version"),
   results: document.getElementById("results"),
   recent: document.getElementById("recent-cities"),
   current: {
@@ -196,10 +198,27 @@ async function searchCity(rawCity) {
   }
 }
 
+// Selo de versão: detalhe discreto para suporte. Se /health falhar, o selo só fica oculto.
+async function loadVersion() {
+  try {
+    const response = await fetch("/health", { headers: { Accept: "application/json" } });
+    if (!response.ok) return;
+    const label = formatVersion((await response.json()).version);
+    if (label) {
+      elements.version.textContent = label;
+      elements.version.hidden = false;
+    }
+  } catch {
+    // Sem versão visível não é um erro para o usuário.
+  }
+}
+
 elements.form.addEventListener("submit", (event) => {
   event.preventDefault();
   searchCity(elements.input.value);
 });
+
+loadVersion();
 
 const recentCities = loadRecentCities();
 renderRecentCities(recentCities);

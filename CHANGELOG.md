@@ -5,6 +5,14 @@ Todas as mudanças relevantes deste projeto são documentadas aqui.
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto
 adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.0] - 2026-09-29
+
+### Adicionado
+
+- Arquivo `VERSION` na raiz como fonte única da versão da aplicação (com fallback `dev`)
+- Selo de versão discreto no cabeçalho do dashboard (ex.: `v1.1.0`), lido de `/health`
+- Testes que garantem que `VERSION` e `pyproject.toml` estão sincronizados
+
 ## [1.0.0] - 2026-09-29
 
 ### Adicionado
@@ -22,4 +30,5 @@ adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
 - Logs de requisição do httpx silenciados para não registrar a chave de API (`appid`)
 
+[1.1.0]: https://github.com/luanaroberto-crypto/mvp/releases/tag/v1.1.0
 [1.0.0]: https://github.com/luanaroberto-crypto/mvp/releases/tag/v1.0.0

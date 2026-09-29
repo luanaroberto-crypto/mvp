@@ -1,10 +1,31 @@
 """Configuração da aplicação carregada de variáveis de ambiente (ou de um arquivo .env)."""
 
 from functools import lru_cache
+from pathlib import Path
 from typing import Literal
 
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+VERSION_FILE = PROJECT_ROOT / "VERSION"
+FALLBACK_VERSION = "dev"
+
+
+def read_version(path: Path = VERSION_FILE) -> str:
+    """Lê a versão do arquivo VERSION (fonte única da verdade, editado a cada release).
+
+    A versão pertence ao build, não ao ambiente — por isso é um arquivo versionado no Git,
+    e não uma variável de ambiente. Arquivo ausente ou vazio resulta em "dev", nunca em erro.
+    """
+    try:
+        content = path.read_text(encoding="utf-8").strip()
+    except OSError:
+        return FALLBACK_VERSION
+    return content or FALLBACK_VERSION
+
+
+APP_VERSION: str = read_version()
 
 
 class Settings(BaseSettings):
