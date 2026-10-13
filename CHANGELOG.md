@@ -5,6 +5,16 @@ Todas as mudanças relevantes deste projeto são documentadas aqui.
 O formato segue [Keep a Changelog](https://keepachangelog.com/pt-BR/1.1.0/) e o projeto
 adota [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
+## [1.1.1] - 2026-10-13
+
+### Alterado
+
+- Fundo do dashboard em tons de rosa (claro no tema claro, rosa escuro no tema escuro)
+
+### Documentação
+
+- README explica como rodar o `uvicorn` pelo Python do `.venv` sem ativar o ambiente virtual
+
 ## [1.1.0] - 2026-09-29
 
 ### Adicionado

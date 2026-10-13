@@ -134,6 +134,20 @@ cp .env.example .env          # Windows: copy .env.example .env
 uvicorn weather_dashboard.main:app --app-dir src --reload
 ```
 
+> 💡 Se aparecer `uvicorn : O termo 'uvicorn' não é reconhecido...`, o ambiente virtual não
+> está ativado. Você pode ativá-lo (veja [Instalação](#instalação)) ou chamar diretamente o
+> Python do `.venv`, sem ativar nada:
+>
+> ```powershell
+> # Windows (PowerShell)
+> .venv\Scripts\python.exe -m uvicorn weather_dashboard.main:app --app-dir src --reload
+> ```
+>
+> ```bash
+> # Linux / macOS
+> .venv/bin/python -m uvicorn weather_dashboard.main:app --app-dir src --reload
+> ```
+
 Acesse:
 
 - Dashboard: <http://localhost:8000>
@@ -173,7 +187,7 @@ dublê via `app.dependency_overrides`.
 |---|---|---|---|
 | `GET` | `/api/weather/current` | `city` (obrigatório) | Clima atual da cidade |
 | `GET` | `/api/weather/forecast` | `city` (obrigatório), `days` (1–5, padrão 5) | Previsão diária |
-| `GET` | `/health` | — | `{"status": "ok", "version": "1.1.0"}` (valor do arquivo `VERSION`) |
+| `GET` | `/health` | — | `{"status": "ok", "version": "1.1.1"}` (valor do arquivo `VERSION`) |
 
 Exemplo:
 

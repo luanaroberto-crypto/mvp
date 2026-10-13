@@ -1,6 +1,6 @@
 /* Design tokens — tema claro por padrão, escuro via prefers-color-scheme. */
 :root {
-  --color-bg: #f3f6fb;
+  --color-bg: #fde4ef;
   --color-surface: #ffffff;
   --color-text: #1b2533;
   --color-muted: #566376;
@@ -23,7 +23,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-bg: #0f1623;
+    --color-bg: #2a1421;
     --color-surface: #182233;
     --color-text: #e7edf6;
     --color-muted: #a3b0c2;
